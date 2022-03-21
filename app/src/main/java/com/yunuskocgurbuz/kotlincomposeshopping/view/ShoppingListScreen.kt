@@ -79,7 +79,9 @@ fun ShoppingListScreen(navController: NavController) {
             )
             Divider(
                 color = Color.Black,
-                modifier = Modifier.fillMaxWidth().width(1.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .width(1.dp)
             )
 
             ShoppingList(navController, shoppingSqliteViewModel)
@@ -142,12 +144,15 @@ fun CategoryItemRow(itemName: String, shoppingViewModel: ShoppingSQLiteViewModel
         shape = RoundedCornerShape(5.dp)
     ) {
 
-        Text(text = itemName,
-            color = Color.Black,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(15.dp)
-        )
+        if(!itemName.isEmpty()){
+            Text(text = itemName,
+                color = Color.Black,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(15.dp)
+            )
+        }
+
     }
 }
 
@@ -183,7 +188,7 @@ fun LoadCategoryList(navController: NavController, categoryList: List<Category>,
                             modifier = Modifier
                                 .clip(RoundedCornerShape(30.dp))
                                 .wrapContentWidth()
-                                .background( if(categoryList.name == categoryName)  Color.LightGray else Color.White)
+                                .background(if (categoryList.name == categoryName) Color.LightGray else Color.White)
                                 .padding(end = 15.dp, start = 15.dp, top = 10.dp, bottom = 10.dp)
                                 .clickable() {
                                     categoryName = categoryList.name
@@ -194,6 +199,7 @@ fun LoadCategoryList(navController: NavController, categoryList: List<Category>,
                         ) {
 
                             Spacer(modifier = Modifier.width(10.dp))
+
                             Text(
                                 text = categoryList.name,
                                 fontFamily = FontFamily(poppinsLight),
@@ -269,13 +275,15 @@ fun dragShoppingCart(
     val getAllShopping = shoppingSqliteViewModel.readAllShopping.observeAsState(listOf()).value
     val shoppingCount = getAllShopping.size
 
-    Box(modifier = Modifier.fillMaxSize().padding(8.dp)) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(8.dp)) {
 
         val poppinsBold = Font(R.font.poppins_bold)
         val configuration = LocalConfiguration.current
 
-        val screenHeight = configuration.screenHeightDp
-        val screenWidth = configuration.screenWidthDp
+       // val screenHeight = configuration.screenHeightDp
+       // val screenWidth = configuration.screenWidthDp
 
         var offsetX by remember { mutableStateOf(0) }
         var offsetY by remember { mutableStateOf(0) }
